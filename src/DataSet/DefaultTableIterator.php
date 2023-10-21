@@ -10,6 +10,8 @@
 
 namespace PHPUnit\DbUnit\DataSet;
 
+use ReturnTypeWillChange;
+
 /**
  * The default table iterator
  */
@@ -67,9 +69,9 @@ class DefaultTableIterator implements ITableIterator
     /**
      * Returns the current table.
      *
-     * @return ITable
+     * @return ITable|bool
      */
-    public function current()
+    #[ReturnTypeWillChange] public function current(): ITable|bool
     {
         return \current($this->tables);
     }
@@ -79,7 +81,7 @@ class DefaultTableIterator implements ITableIterator
      *
      * @return string
      */
-    public function key()
+    #[ReturnTypeWillChange] public function key(): string
     {
         return $this->current()->getTableMetaData()->getTableName();
     }
@@ -113,7 +115,7 @@ class DefaultTableIterator implements ITableIterator
      *
      * @return bool
      */
-    public function valid()
+    #[ReturnTypeWillChange] public function valid(): bool
     {
         return $this->current() !== false;
     }

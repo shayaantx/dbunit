@@ -11,6 +11,7 @@
 namespace PHPUnit\DbUnit\DataSet;
 
 use OuterIterator;
+use ReturnTypeWillChange;
 
 /**
  * The default table iterator
@@ -97,7 +98,7 @@ class ReplacementTableIterator implements OuterIterator, ITableIterator
      *
      * @return ITable
      */
-    public function current()
+    #[ReturnTypeWillChange] public function current(): ITable|ReplacementTable
     {
         return new ReplacementTable($this->innerIterator->current(), $this->fullReplacements, $this->subStrReplacements);
     }
@@ -107,7 +108,7 @@ class ReplacementTableIterator implements OuterIterator, ITableIterator
      *
      * @return string
      */
-    public function key()
+    #[ReturnTypeWillChange] public function key(): string
     {
         return $this->current()->getTableMetaData()->getTableName();
     }
@@ -133,12 +134,12 @@ class ReplacementTableIterator implements OuterIterator, ITableIterator
      *
      * @return bool
      */
-    public function valid()
+    #[ReturnTypeWillChange] public function valid(): bool
     {
         return $this->innerIterator->valid();
     }
 
-    public function getInnerIterator()
+    #[ReturnTypeWillChange] public function getInnerIterator(): ITableIterator
     {
         return $this->innerIterator;
     }

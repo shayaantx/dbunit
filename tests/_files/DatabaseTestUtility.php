@@ -36,7 +36,7 @@ class DBUnitTestUtility
     public static function getMySQLDB()
     {
         if (self::$mySQLConnection === null) {
-            self::$mySQLConnection = new PDO(PHPUNIT_TESTSUITE_EXTENSION_DATABASE_MYSQL_DSN, PHPUNIT_TESTSUITE_EXTENSION_DATABASE_MYSQL_USERNAME, PHPUNIT_TESTSUITE_EXTENSION_DATABASE_MYSQL_PASSWORD);
+            self::$mySQLConnection = new PDO($_ENV['MYSQL_DSN'], $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD']);
 
             self::setUpMySQLDatabase(self::$mySQLConnection);
         }

@@ -1,0 +1,21 @@
+version: '3.4'
+services:
+  db:
+    image: mysql:5.7.40
+    environment:
+      MYSQL_ROOT_PASSWORD: "root1234"
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+
+  dbunit:
+    build:
+      context: .
+    environment:
+      MYSQL_DSN: "mysql:host=db;port=3306;dbname=dbunit"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "root1234"
+    depends_on:
+      - db
+    volumes:
+      - ./:/home/app

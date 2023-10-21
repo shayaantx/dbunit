@@ -12,6 +12,7 @@ use PHPUnit\DbUnit\DataSet\CompositeDataSet;
 use PHPUnit\DbUnit\DataSet\DefaultDataSet;
 use PHPUnit\DbUnit\DataSet\DefaultTable;
 use PHPUnit\DbUnit\DataSet\DefaultTableMetadata;
+use PHPUnit\DbUnit\InvalidArgumentException;
 use PHPUnit\DbUnit\TestCase;
 
 class Extensions_Database_DataSet_CompositeDataSetTest extends \PHPUnit\Framework\TestCase
@@ -141,10 +142,6 @@ asdflkjsadf asdfsadfhl "adsf, halsdf" sadfhlasdf'
         $this->assertEquals(4, $compositeDataSet->getTable('table3')->getRowCount());
     }
 
-    /**
-     * @expectedException           InvalidArgumentException
-     * @expectedExceptionMessage    There is already a table named table3 with different table definition
-     */
     public function testExceptionOnIncompatibleTablesSameTableNames(): void
     {
         $inCompatibleTableMetaData = new DefaultTableMetadata(
@@ -160,16 +157,15 @@ asdflkjsadf asdfsadfhl "adsf, halsdf" sadfhlasdf'
             'column16' => 2141
         ]);
 
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("There is already a table named table3 with different table definition");
+
         $compositeDataSet = new CompositeDataSet([
             $this->expectedDataSet2,
             new DefaultDataSet([$inCompatibleTable])
         ]);
     }
 
-    /**
-     * @expectedException           InvalidArgumentException
-     * @expectedExceptionMessage    There is already a table named table3 with different table definition
-     */
     public function testExceptionOnIncompatibleTablesSameTableNames2(): void
     {
         $inCompatibleTableMetaData = new DefaultTableMetadata(
@@ -185,6 +181,8 @@ asdflkjsadf asdfsadfhl "adsf, halsdf" sadfhlasdf'
             'column16' => 2141
         ]);
 
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("There is already a table named table3 with different table definition");
         $compositeDataSet = new CompositeDataSet([
             new DefaultDataSet([$inCompatibleTable]),
             $this->expectedDataSet2

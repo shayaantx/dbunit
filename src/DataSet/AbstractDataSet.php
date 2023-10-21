@@ -10,6 +10,8 @@
 
 namespace PHPUnit\DbUnit\DataSet;
 
+use ReturnTypeWillChange;
+
 /**
  * Implements the basic functionality of data sets.
  */
@@ -77,9 +79,9 @@ abstract class AbstractDataSet implements IDataSet
     /**
      * Returns an iterator for all table objects in the given dataset.
      *
-     * @return ITableIterator
+     * @return ITableIterator|\ArrayIterator
      */
-    public function getIterator()
+    #[ReturnTypeWillChange] public function getIterator(): ITableIterator|\ArrayIterator
     {
         return $this->createIterator();
     }
